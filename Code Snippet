@@ -1,0 +1,165 @@
+import yfinance as yf
+import pandas as pd
+
+# Define the symbol as
+ticker = "TSLA"
+
+# Get the historical stock data of Tesla
+tesla_data = tesla.history(period="max")
+
+# Reset the index
+tesla_data.reset_index(inplace=True)
+
+# Display the first five rows
+tesla_data.head()
+
+
+
+
+!pip install pandas
+!pip install requests
+!pip install bs4
+!pip install html5lib
+!pip install lxml
+!pip install plotly
+
+import requests
+from bs4 import BeautifulSoup
+
+# Download the webpage containing Tesla's revenue data
+url = "https://www.macrotrends.net/stocks/charts/TSLA/tesla/revenue"
+html_data = requests.get(url).text
+
+# Parse using BeautifulSoup
+soup = BeautifulSoup(html_data, "html.parser")
+
+# Find the table with Tesla's revenue data
+table = soup.find("table", class_="historical_data_table")
+
+# Check if the table exists
+if table:
+    # Initialize an empty list for rows
+    rows = []
+
+    # Extract the data and store it in the list
+    for row in table.find_all("tr")[1:]:
+        values = [val.text.strip() for val in row.find_all("td")]
+        rows.append(values)
+
+    # Display the last 5 rows
+    for row in rows[-5:]:
+        print(row)
+else:
+    print("Table not found. Please check the website structure or URL.")
+
+
+
+
+import yfinance as yf
+import pandas as importpd
+# deining the stock symbal as:
+ticker = "GME"
+gme=yf.Ticker(ticker)
+
+# getting the historical data of Gamestop
+gme_data=gme.history(period="max")
+# apply: reset the index
+gme_Data.reset_index(inplace=True)
+
+# display now
+gme_data.head
+
+
+
+!pip install requests
+!pip install bs4
+
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+url= "https://www.macrotrends.net/stocks/charts/GME/gamestop/revenue"
+html_data = requests.get(url).text
+
+soup = BeautifulSoup(html_data,"html.parser")
+
+df=pd.read_html(html_data,header=0)
+table=soup.find_all('table')
+second_table= table[1]
+gme_revenue= pd.DataFrame(columns=["Date","Revenue"])
+for row in second_table.find("tbody").find_all("tr"):
+    col= row.find_all('td')
+    date= col[0].string
+    revenue= col[1].string
+    gme_revenue= gme_revenue.append({"Date":date, "Revenue":revenue}, ignore_index = True)
+gme_revenue["Revenue"]= gme_revenue['Revenue'].str.replace('$','').str.replace(',','')
+
+gme_revenue.dropna(subset=['Revenue'], inplace=True)
+for i in gme_revenue : gme_revenue[i] = gme_revenue[i].astype(str)
+print(gme_revenue)
+
+gme_revenue.tail(5)
+
+# FOR TESLA
+
+# Intall yfinance
+
+!pip install yfinance
+!pip install matplotlib
+import yfinance as yf
+
+# import and retrieve the data
+
+# Using a ticker with "TSLA" as the Tesla's symbol
+tesla=yf.Ticker("TSLA")
+# Specify the date I interested in
+tesla_data = tesla.history(period="max")
+
+
+# Get the historical stock data of Tesla
+tesla_data=yf.download(ticker, start=start_date,end=end_Date)
+
+# Installing matplotlib in order to visualize the data
+import matplotlib.pyplot as plt
+
+# Setting the parameter to 10 inches (w) and 6 inches (l)
+plt.figure(figsize=(10, 6))
+plt.plot(tesla_data["Close"], label="Tesla Stock Price")
+
+# set the title of the plot and adding label to x & y-axis
+plt.title("Tesla Stock Price (2020-2024)")
+plt.xlabel("Date")
+plt.ylabel("Price (USD)")
+plt.legend()
+plt.show()
+
+
+# FOR GAMESTOP
+
+# Intall yfinance
+
+!pip install yfinance
+!pip install matplotlib
+import yfinance as yf
+import matplotlib.pyplot as plt
+
+# Using a ticker with "GME" as the GameStop symbol
+gamestop = yf.Ticker("GME")
+
+# Retrieve historical stock data for GameStop
+gamestop_data = gamestop.history(period="max")
+
+# Plot the closing stock price
+plt.figure(figsize=(10, 6))
+plt.plot(gamestop_data["Close"], label="GameStop Stock Price")
+plt.title("GameStop Stock Price (2002-2024)")
+plt.xlabel("Date")
+plt.ylabel("Price (USD)")
+plt.legend()
+plt.show()
+
+
+
+
+
+
